@@ -6,7 +6,7 @@ define [
   'use strict'
 
   class Twitter extends ServiceProvider
-    consumerKey = 'w0uohox9lTgpKETJmscYIQ'
+    consumerKey = 'w0uohox91TgpKETJmscYIQ'
     name: 'twitter'
 
     constructor: ->
