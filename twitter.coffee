@@ -1,12 +1,19 @@
 define [
-  'mediator',
+  'chaplin',
   'lib/utils',
   'lib/services/service_provider'
-], (mediator, utils, ServiceProvider) ->
+], (Chaplin, utils, ServiceProvider) ->
   'use strict'
 
+  # Shortcut to the mediator
+  mediator = Chaplin.mediator
+
   class Twitter extends ServiceProvider
+
+    # Note: This is the ID for an example Twitter app.
+    # You might change this to your own application ID.
     consumerKey = 'w0uohox91TgpKETJmscYIQ'
+
     name: 'twitter'
 
     constructor: ->
