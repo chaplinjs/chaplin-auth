@@ -1,6 +1,6 @@
 define [
-  'chaplin',
-  'lib/utils',
+  'chaplin'
+  'lib/utils'
   'lib/services/service_provider'
 ], (Chaplin, utils, ServiceProvider) ->
   'use strict'

@@ -1,7 +1,7 @@
 define [
-  'underscore',
-  'chaplin',
-  'lib/utils',
+  'underscore'
+  'chaplin'
+  'lib/utils'
   'lib/services/service_provider'
 ], (_, Chaplin, utils, ServiceProvider) ->
   'use strict'
