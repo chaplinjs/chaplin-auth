@@ -13,7 +13,7 @@ define [
     loading: false
 
     constructor: ->
-      ###console.debug 'ServiceProvider#constructor'###
+      #console.debug 'ServiceProvider#constructor'
 
       # Mixin a Deferred
       _(this).extend $.Deferred()
@@ -29,7 +29,7 @@ define [
     disposed: false
 
     dispose: ->
-      ###console.debug 'ServiceProvider#dispose'###
+      #console.debug 'ServiceProvider#dispose'
       return if @disposed
 
       # Unbind handlers of global events
