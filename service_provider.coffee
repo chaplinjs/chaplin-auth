@@ -1,14 +1,14 @@
 define [
   'underscore'
-  'chaplin'
+  'chaplin/lib/event_broker'
   'lib/utils'
-], (_, Chaplin, utils) ->
+], (_, EventBroker, utils) ->
   'use strict'
 
   class ServiceProvider
 
-    # Mixin a Subscriber
-    _(@prototype).extend Chaplin.Subscriber
+    # Mixin an EventBroker
+    _(@prototype).extend EventBroker
 
     loading: false
 
