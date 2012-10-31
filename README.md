@@ -2,15 +2,18 @@
 
 # Chaplin Service Providers
 
-Clone the repository to your application `lib/services` directory.
+## Usage
+1. Clone the repository to your application `lib/services` directory.
+2. Add providers to your `SessionController`, like this:
 
-Add providers to your `SessionController`, like this:
+    ```coffeescript
+    class SessionController extends Controller
+      @serviceProviders =
+        facebook: new Facebook()
+    ```
 
-```coffeescript
-class SessionController extends Controller
-  @serviceProviders =
-    facebook: new Facebook()
-```
+3. Copy loadLib definition to your `lib/utils` from
+[facebook example](https://github.com/chaplinjs/facebook-example/blob/master/coffee/lib/utils.coffee#L102-134).
 
 ## [The Cast](https://github.com/chaplinjs/chaplin/blob/master/AUTHORS.md#the-cast)
 
