@@ -55,7 +55,7 @@ module.exports = class SessionController extends Controller
     for name, serviceProvider of SessionController.serviceProviders
       serviceProvider.done serviceProvider.getLoginStatus
 
-  # Handler for the global !showLoginView event
+  # Handler for the global !showLogin event
   showLoginView: ->
     return if @loginView
     @loadServiceProviders()
