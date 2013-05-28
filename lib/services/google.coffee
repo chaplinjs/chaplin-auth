@@ -10,11 +10,12 @@ class Google extends ServiceProvider
   # You might change this to your own project ID.
   # See https://code.google.com/apis/console/
   clientId = '365800635017'
+  apiKey = ''
 
   # The permissions we’re asking for. This is a space-separated list of URLs.
   # See https://developers.google.com/accounts/docs/OAuth2Login#scopeparameter
   # and the individual Google API documentations
-  scopes = 'https://www.googleapis.com/auth/userinfo.profile'
+  scopes = 'https://www.googleapis.com/auth/plus.me'
 
   name: 'google'
 
@@ -30,6 +31,8 @@ class Google extends ServiceProvider
 
   loadHandler: =>
     # Remove the global load handler
+    gapi.client.setApiKey @apiKey
+    
     try
       # IE 8 throws an exception
       delete window.googleClientLoaded
@@ -42,7 +45,7 @@ class Google extends ServiceProvider
   isLoaded: ->
     Boolean window.gapi and gapi.auth and gapi.auth.authorize
 
-  triggerLogin: () =>
+  triggerLogin: =>
     gapi.auth.authorize
       client_id: clientId, scope: scopes, immediate: false
       @loginHandler
@@ -57,16 +60,26 @@ class Google extends ServiceProvider
         provider: this
         accessToken: authResponse.access_token
 
+      @getUserData @processUserData
+      
     else
       @publishEvent 'loginFail', {provider: this, authResponse}
 
-  getLoginStatus: () =>
-    gapi.auth.authorize { client_id: clientId, scope: scopes, immediate: true }, @loginHandler
+  getLoginStatus: =>
+    gapi.auth.authorize
+      client_id: clientId, scope: scopes, immediate: true
+      @loginHandler
 
-  # TODO
-  getUserInfo: (callback) ->
-    request = gapi.client.request path: '/oauth2/v2/userinfo'
-    request.execute callback
+  getUserData: (callback) ->
+    gapi.client.load 'plus', 'v1', ->
+      request = gapi.client.plus.people.get {'userId': 'me'}
+      request.execute callback
+
+  processUserData: (response) =>
+    @publishEvent 'userData',
+      imageUrl: response.image.url
+      name: response.displayName
+      id: response.id
 
   parsePlusOneButton: (el) ->
     if window.gapi and gapi.plusone and gapi.plusone.go
