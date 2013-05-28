@@ -9,7 +9,7 @@ class Google extends ServiceProvider
   # Note: This is the ID for an example Google API project.
   # You might change this to your own project ID.
   # See https://code.google.com/apis/console/
-  clientId = '365800635017.apps.googleusercontent.com'
+  clientId = '365800635017'
 
   # The permissions we’re asking for. This is a space-separated list of URLs.
   # See https://developers.google.com/accounts/docs/OAuth2Login#scopeparameter
@@ -42,15 +42,15 @@ class Google extends ServiceProvider
   isLoaded: ->
     Boolean window.gapi and gapi.auth and gapi.auth.authorize
 
-  triggerLogin: (loginContext) ->
+  triggerLogin: () =>
     gapi.auth.authorize
       client_id: clientId, scope: scopes, immediate: false
-      _(@loginHandler).bind(this, loginContext)
+      @loginHandler
 
-  loginHandler: (loginContext, authResponse) ->
+  loginHandler: (authResponse) =>
     if authResponse
       # Publish successful login
-      @publishEvent 'loginSuccessful', {provider: this, loginContext}
+      @publishEvent 'loginSuccessful', {provider: this, authResponse}
 
       # Publish the session
       @publishEvent 'serviceProviderSession',
@@ -58,10 +58,10 @@ class Google extends ServiceProvider
         accessToken: authResponse.access_token
 
     else
-      @publishEvent 'loginFail', {provider: this, loginContext}
+      @publishEvent 'loginFail', {provider: this, authResponse}
 
-  getLoginStatus: (callback) ->
-    gapi.auth.authorize { client_id: clientId, scope: scopes, immediate: true }, callback
+  getLoginStatus: () =>
+    gapi.auth.authorize { client_id: clientId, scope: scopes, immediate: true }, @loginHandler
 
   # TODO
   getUserInfo: (callback) ->
