@@ -1,4 +1,3 @@
-mediator = require 'mediator'
 utils = require 'lib/utils'
 ServiceProvider = require 'lib/services/service_provider'
 
