@@ -1,5 +1,4 @@
 utils = require 'lib/utils'
-Chaplin = require 'chaplin'
 
 module.exports = class ServiceProvider
   # Mixin an Event Broker
